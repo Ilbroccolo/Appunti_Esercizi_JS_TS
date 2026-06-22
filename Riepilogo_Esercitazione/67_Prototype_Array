@@ -1,0 +1,21 @@
+Si scriva in TypeScript una funzione *classh(o)* che, dato come argomento un qualunque oggetto o, restituisca un array di stringhe che contiene, in ordine dalla più generale alla più precisa, tutte le classi a cui o appartiene.
+> 
+	⁠Per esempio, se abbiamo implementato una class MultiSet che estende Set, e un oggetto m=new MultiSet(), allora classh(m) deve restituire ⁠ ["Object", "Set", "MultiSet"] ⁠.
+
+
+
+```TypeScript
+function classh(o:any):string[]{
+    let array: string[] = []
+    
+    let p = Object.getPrototypeOf(o)
+    
+    while(p !== null){
+    
+        array.push(p.constructor.name)
+        
+        p = Object.getPrototypeOf(p)
+    }
+    return array.reverse()
+
+}
