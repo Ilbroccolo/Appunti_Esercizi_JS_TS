@@ -32,6 +32,7 @@ Sezione dedicata ai costrutti puri, validi sia in JS che in TS, espressi nel mod
 
 ### 1. Metodi Array
 I metodi più utili per l'esame. *Attenzione a quelli che modificano (mutano) l'array originario.*
+🔗 **Esercizi di riferimento**: [08_array_popmin.js](./Riepilogo_Esercitazione/08_array_popmin.js), [35_array_limitato.ts](./Riepilogo_Esercitazione/35_array_limitato.ts), [56_filter_lista.js](./Riepilogo_Esercitazione/56_filter_lista.js)
 
 | Metodo | Utilizzo | Modifica Originale? |
 | --- | --- | :---: |
@@ -49,6 +50,7 @@ I metodi più utili per l'esame. *Attenzione a quelli che modificano (mutano) l'
 | `.flatMap(x => [x])`| Mappa e appiattisce di 1 livello. | ❌ |
 
 ### 2. Dizionari (Map) e Insiemi (Set)
+🔗 **Esercizi di riferimento**: [25_hwm_set.ts](./Riepilogo_Esercitazione/25_hwm_set.ts) (Set), [37_hashmap_capricciosa.ts](./Riepilogo_Esercitazione/37_hashmap_capricciosa.ts) (Map)
 * **`Set`** (Insiemi senza duplicati):
   `const s = new Set([1,1,2]);` -> `{1, 2}`
   Metodi: `.add(x)`, `.has(x)`, `.delete(x)`, `.size`.
@@ -57,6 +59,7 @@ I metodi più utili per l'esame. *Attenzione a quelli che modificano (mutano) l'
   Metodi: `.set(k, v)`, `.get(k)`, `.has(k)`, `.delete(k)`.
 
 ### 3. Alberi e Visite (DFS, BFS, Generatori)
+🔗 **Esercizi di riferimento**: [38_albero_sxdx.ts](./Riepilogo_Esercitazione/38_albero_sxdx.ts), [59_biggest_tree.ts](./Riepilogo_Esercitazione/59_biggest_tree.ts), [altezza.js](./Riepilogo_Esercitazione/altezza.js)
 
 **Struttura Nodi (Schematica):**
 * Binario: `nodo = { value, left, right }`
@@ -81,6 +84,7 @@ function BFS(radice) {
 ```
 
 **Generatori per le Visite (`yield`):**
+🔗 **Esercizi di riferimento**: [44_albero_binario_generatore.js](./Riepilogo_Esercitazione/44_albero_binario_generatore.js), [visita_generatore.ts](./Riepilogo_Esercitazione/visita_generatore.ts)
 Permettono di iterare un albero step-by-step.
 ```javascript
 function* visita(nodo) {
@@ -93,7 +97,8 @@ function* visita(nodo) {
 
 ### 4. Pattern e Costrutti Avanzati
 
-* **Memoizzazione (Caching)** (Esercizi `15_memo.js`):
+* **Memoizzazione (Caching)** 
+  🔗 **Esercizi di riferimento**: [15_memo.js](./Riepilogo_Esercitazione/15_memo.js), [23_funzione_cache.ts](./Riepilogo_Esercitazione/23_funzione_cache.ts)
   Salva risultati costosi in una Map per non ripeterli.
   ```javascript
   const cache = new Map();
@@ -111,7 +116,8 @@ function* visita(nodo) {
   function creaContatore() { let i = 0; return () => ++i; }
   ```
 
-* **Prototipi (Modificare classi base)** (Esercizio `68_Prototype_Array.ts`):
+* **Prototipi (Modificare classi base)** 
+  🔗 **Esercizi di riferimento**: [68_Prototype_Array.ts](./Riepilogo_Esercitazione/68_Prototype_Array.ts)
   ```javascript
   Array.prototype.primo = function() { return this[0]; };
   ```
@@ -129,6 +135,8 @@ function* visita(nodo) {
 TypeScript aggiunge tipi statici a JavaScript. È fondamentale per avere autocompletamento e zero errori a runtime.
 
 ### 1. Tipi Primitivi e Tuple
+🔗 **Esercizi di riferimento (Coordinate e Punti)**: [24_centroide_punti.ts](./Riepilogo_Esercitazione/24_centroide_punti.ts), [41_cammino_coordinate.ts](./Riepilogo_Esercitazione/41_cammino_coordinate.ts)
+
 In TypeScript oltre a `string`, `number`, `boolean`, `any` o `unknown`, esistono le **Tuple** (array con lunghezza e tipi prefissati):
 ```typescript
 // Tupla (es. Coordinata)
@@ -140,9 +148,11 @@ const [x, y] = punto;
 ```
 
 ### 2. Tipi Custom (`type`) e Interfacce (`interface`)
+🔗 **Esercizi di riferimento (Ereditarietà e Fabbriche)**: [16_gestione_libri.js](./Riepilogo_Esercitazione/16_gestione_libri.js), [42_imbarcazioni_classi.js](./Riepilogo_Esercitazione/42_imbarcazioni_classi.js)
+
 Si usano per definire la "forma" di un oggetto.
 
-**Interface** (Ideale per oggetti e classi, estendibile facilmente):
+**Interface** (Ideale per oggetti e classi, estendibile facilmente tramite ereditarietà):
 ```typescript
 interface Persona {
     nome: string;
@@ -151,7 +161,7 @@ interface Persona {
     email?: string;        // Opzionale (?)
 }
 
-// Estendere un'interfaccia
+// Estendere un'interfaccia (Ereditarietà)
 interface Lavoratore extends Persona {
     stipendio: number;
 }
@@ -166,6 +176,8 @@ type Coodinata3D = [number, number, number]; // Type alias per una Tupla
 ```
 
 ### 3. Generics (`<T>`)
+🔗 **Esercizi di riferimento**: [codaGenerics.ts](./Esame%20Scritto%20Esercizi/codaGenerics.ts), [36_coda_priorita.ts](./Riepilogo_Esercitazione/36_coda_priorita.ts)
+
 Permettono di creare componenti riutilizzabili che lavorano con vari tipi senza perdere il controllo rigoroso (es. Nodi degli alberi o Liste).
 ```typescript
 // Un nodo che può contenere un numero, una stringa o qualsiasi T
