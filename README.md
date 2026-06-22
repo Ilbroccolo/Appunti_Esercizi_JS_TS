@@ -34,20 +34,23 @@ Sezione dedicata ai costrutti puri, validi sia in JS che in TS, espressi nel mod
 I metodi più utili per l'esame. *Attenzione a quelli che modificano (mutano) l'array originario.*
 🔗 **Esercizi di riferimento**: [08_array_popmin.js](./Riepilogo_Esercitazione/08_array_popmin.js), [35_array_limitato.ts](./Riepilogo_Esercitazione/35_array_limitato.ts), [56_filter_lista.js](./Riepilogo_Esercitazione/56_filter_lista.js)
 
-| Metodo | Utilizzo | Modifica Originale? |
-| --- | --- | :---: |
-| `.map(x => x*2)` | Trasforma ogni elemento (Nuovo array). | ❌ |
-| `.filter(x => x>0)`| Estrae elementi che superano il test. | ❌ |
-| `.reduce((a,c)=>a+c)`| Accumula tutti i valori in uno solo. | ❌ |
-| `.find(x => x==5)` | Trova il **primo** elemento corrispondente. | ❌ |
-| `.some(x => x<0)`  | `true` se **almeno uno** rispetta il test. | ❌ |
-| `.every(x => x>0)` | `true` se **tutti** rispettano il test. | ❌ |
-| `.push(x) / .pop()`| Aggiunge/rimuove in coda (uso **Stack**). | ⚠️ |
-| `.unshift(x) / .shift()`| Aggiunge/rimuove in testa (uso **Coda**). | ⚠️ |
-| `.splice(idx, n)`  | Rimuove `n` elementi dall'indice `idx`. | ⚠️ |
-| `.slice(start, end)`| Copia porzioni di array. | ❌ |
-| `.sort((a,b)=>a-b)`| Ordina l'array. | ⚠️ |
-| `.flatMap(x => [x])`| Mappa e appiattisce di 1 livello. | ❌ |
+| Metodo | Cosa fa? | Esempio Pratico | Ritorna | Modifica l'originale? |
+| --- | --- | --- | --- | --- |
+| **`.map()`** | Mappa ogni elemento su un nuovo valore. | `arr.map(x => x * 2)` | Nuovo Array | ❌ No |
+| **`.filter()`** | Filtra gli elementi in base a una condizione. | `arr.filter(x => x > 10)` | Nuovo Array | ❌ No |
+| **`.reduce()`** | Accumula i valori in un singolo risultato. | `arr.reduce((acc, x) => acc + x, 0)` | Singolo Valore | ❌ No |
+| **`.reduceRight()`**| Come reduce, ma parte dall'ultimo elemento. | `arr.reduceRight((acc, x) => acc + x, '')` | Singolo Valore | ❌ No |
+| **`.forEach()`** | Itera per ogni elemento (effetti collaterali). | `arr.forEach(x => console.log(x))` | `undefined` | ❌ No |
+| **`.find()`** | Restituisce il *primo* elemento trovato. | `arr.find(x => x.id === 5)` | L'elemento o `undefined` | ❌ No |
+| **`.findIndex()`**| Restituisce l'indice del primo elemento trovato.| `arr.findIndex(x => x === 5)` | Indice (-1 se non c'è) | ❌ No |
+| **`.some()`** / **`.every()`** | Controlla se *almeno uno* / *tutti* soddisfano il test. | `arr.some(x => x < 0)` | Boolean | ❌ No |
+| **`.push()`** / **`.pop()`** | Aggiunge/Rimuove in coda (uso Pila/Stack). | `arr.push(5); arr.pop()` | Nuova lung. / Elem. rimosso | ⚠️ **Sì** |
+| **`.unshift()`** / **`.shift()`** | Aggiunge/Rimuove in testa (uso Coda/Queue). | `arr.shift()` | Nuova lung. / Elem. rimosso | ⚠️ **Sì** |
+| **`.splice()`** | Rimuove, sostituisce o aggiunge a un indice preciso. | `arr.splice(indice, 1)` | Array di rimossi | ⚠️ **Sì** |
+| **`.slice()`** | Crea una copia superficiale di una porzione. | `arr.slice(1, 4)` | Nuovo Array | ❌ No |
+| **`.sort()`** | Ordina l'array (richiede funzione comparazione!). | `arr.sort((a,b) => a - b)` | L'array ordinato | ⚠️ **Sì** |
+| **`.join()`** | Unisce gli elementi in una stringa tramite separatore. | `arr.join(', ')` | Stringa | ❌ No |
+| **`.flatMap()`** | Applica `map` e poi "appiattisce" l'array di 1 livello. | `arr.flatMap(x => [x, x*2])`| Nuovo Array | ❌ No |
 
 ### 2. Dizionari (Map) e Insiemi (Set)
 🔗 **Esercizi di riferimento**: [25_hwm_set.ts](./Riepilogo_Esercitazione/25_hwm_set.ts) (Set), [37_hashmap_capricciosa.ts](./Riepilogo_Esercitazione/37_hashmap_capricciosa.ts) (Map)
