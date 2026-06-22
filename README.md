@@ -79,61 +79,102 @@ Le visite servono per attraversare i nodi dell'albero. Possono essere implementa
 
 #### A. Visita in Profondità (DFS - Depth First Search)
 La visita DFS si spinge fino alle foglie prima di tornare indietro. Su un albero binario si divide in:
-- **Pre-ordine (Anticipata)**: Visito il nodo -> Scendo a Sinistra -> Scendo a Destra. Utile per copiare o serializzare un albero.
-- **In-ordine (Simmetrica)**: Scendo a Sinistra -> Visito il nodo -> Scendo a Destra. Negli ABR (Alberi Binari di Ricerca), l'in-ordine restituisce i valori ordinati!
-- **Post-ordine (Posticipata)**: Scendo a Sinistra -> Scendo a Destra -> Visito il nodo. Utile per calcolare altezze, cancellare l'albero o valutare espressioni matematiche ad albero.
+- **Pre-ordine (Anticipata)**: Visito il nodo -> Scendo a Sinistra -> Scendo a Destra.
+- **In-ordine (Simmetrica)**: Scendo a Sinistra -> Visito il nodo -> Scendo a Destra. Negli ABR (Alberi Binari di Ricerca), l'in-ordine restituisce i valori in ordine crescente!
+- **Post-ordine (Posticipata)**: Scendo a Sinistra -> Scendo a Destra -> Visito il nodo. 
 
 #### B. Visita in Ampiezza (BFS - Livelli)
-Attraversa l'albero strato per strato (livello per livello). Non è ricorsiva per natura, utilizza una **Coda (Queue)** di appoggio:
+Attraversa l'albero strato per strato. Si usa sempre una **Coda (Queue)** per realizzarla.
 ```javascript
 function visitaAmpiezza(radice) {
     if (!radice) return;
-    const coda = [radice]; // Uso l'array come Coda (push e shift)
+    const coda = [radice]; // Uso l'array come Coda
     while (coda.length > 0) {
-        const corrente = coda.shift(); // Estrae il primo elemento
+        const corrente = coda.shift(); // Estrae dalla testa
         console.log(corrente.value); // Visita
         
-        if (corrente.left) coda.push(corrente.left);
+        if (corrente.left) coda.push(corrente.left); // Accoda figli
         if (corrente.right) coda.push(corrente.right);
     }
 }
 ```
 
 ### 3. I Generatori (`function*`) per le Visite
-I generatori permettono di creare iteratori eleganti per le visite. Invece di salvare l'intera visita in un array o stamparla, il generatore "spara" un nodo alla volta usando `yield`. `yield*` viene usato per delegare la chiamata ricorsiva a un altro iteratore/generatore.
-
-**Esempio: Generatore per la visita Pre-Ordine di un Albero K-Ario**
+Invece di accumulare i nodi visitati in memoria, il generatore li restituisce ("spara") uno a uno su richiesta.
 ```javascript
 function* preOrderKNode(node) {
     if (!node) return;
-    yield node.value; // Visita il nodo corrente
+    yield node.value; // Visita il nodo corrente e lo passa a chi chiama
     for (let child of node.children) {
-        yield* preOrderKNode(child); // yield* lancia il generatore ricorsivamente sui figli
+        yield* preOrderKNode(child); // Delega la generazione ai figli (ricorsione sui generatori)
     }
-}
-
-// Utilizzo:
-for (let val of preOrderKNode(radice)) {
-    console.log(val); // Processa un nodo alla volta
 }
 ```
 
 ---
 
+## 🛠 Funzioni e Pattern Più Complessi (con link agli Esercizi)
+
+Esistono concetti avanzati applicati spesso nei progetti della cartella `Riepilogo_Esercitazione` o in altre. Ecco i più importanti con richiamo diretto:
+
+### 1. La Memoizzazione (Caching per l'ottimizzazione)
+La memoizzazione permette di velocizzare funzioni pesanti o fortemente ricorsive (come Fibonacci) ricordando risultati già calcolati in una `Map` temporanea.
+🔗 **Vedi esempi**: [15_memo.js](./Riepilogo_Esercitazione/15_memo.js) o [23_funzione_cache.ts](./Riepilogo_Esercitazione/23_funzione_cache.ts)
+```javascript
+function memoize(fn) {
+  const cache = new Map();
+  return function(...args) {
+    const key = JSON.stringify(args);
+    if (cache.has(key)) return cache.get(key); // Restituisco dalla cache
+    
+    const result = fn(...args);
+    cache.set(key, result); // Salvo per il futuro
+    return result;
+  };
+}
+```
+
+### 2. Calcolo dell'Altezza e Ricerca del Massimo negli Alberi
+Modelli base di Post-Ordine che devi saper padroneggiare in ogni caso di esame sugli alberi.
+🔗 **Vedi esempi**: [altezza.js](./Riepilogo_Esercitazione/altezza.js) e [63_albero_massimo.ts](./Riepilogo_Esercitazione/63_albero_massimo.ts)
+```javascript
+function calcolaAltezza(node) {
+  if (!node) return -1; // Un albero vuoto ha altezza -1
+  const hSinistra = calcolaAltezza(node.left);
+  const hDestra = calcolaAltezza(node.right);
+  return 1 + Math.max(hSinistra, hDestra);
+}
+
+function trovaMassimo(node) {
+  if (!node) return -Infinity;
+  return Math.max(node.value, trovaMassimo(node.left), trovaMassimo(node.right));
+}
+```
+
+### 3. Coda di Priorità (Priority Queue)
+Invece di processare in ordine di arrivo, gestisce gli elementi in base alla priorità (es. in base a chi ha il "voto" più alto). Spesso implementata tramite Array in via semplificata o Min/Max-Heap in modo ottimizzato.
+🔗 **Vedi esempi**: [36_coda_priorita.ts](./Riepilogo_Esercitazione/36_coda_priorita.ts) o [49_triage_pronto_soccorso.ts](./Riepilogo_Esercitazione/49_triage_pronto_soccorso.ts)
+
+### 4. Filtro Avanzato o "Sanitize" degli Oggetti
+Per ripulire e validare le chiavi di un oggetto annidato in TypeScript o JS (spesso richiesto per validare dati in ingresso).
+🔗 **Vedi esempio**: [39_sanitize_oggetto.ts](./Riepilogo_Esercitazione/39_sanitize_oggetto.ts)
+
+---
+
 ## ⚙️ Altri Costrutti JS/TS Importanti
 
-### Destrutturazione ed Estrazione
-Estremamente usati quando si passano oggetti complessi o si usano moduli.
+### Destrutturazione ed Estrazione (Spread / Rest)
+Estremamente usati quando si passano oggetti complessi, per la ricorsione su Array o per creare copie sicure.
 ```javascript
-// Destrutturazione Array
+// Destrutturazione Array (Separare la Testa dalla Coda per le ricorsioni funzionali)
 const [testa, ...coda] = [1, 2, 3, 4]; // testa = 1, coda = [2, 3, 4]
 
-// Destrutturazione Oggetti
-const nodo = { val: 5, left: null, right: null };
-const { val, left } = nodo; // val = 5
+// Clonazione ed espansione
+const vecchioUtente = { nome: "Mario", id: 1 };
+const nuovoUtente = { ...vecchioUtente, isAdmin: true }; // Copia senza mutare l'originale
 ```
 
 ### L'Interazione JavaScript 🤝 TypeScript
-- **TS è un Superset**: Qualsiasi file JS valido è anche TS valido (se non si forzano controlli restrittivi).
+- **TS è un Superset**: Qualsiasi file JS valido è anche TS valido.
 - **JSDoc in JavaScript**: Tramite commenti `/** @param {number} x */` e aggiungendo `// @ts-check` a inizio file, si ottiene la validazione statica dei tipi anche su semplici file `.js`!
-- **Dichiarazioni `.d.ts`**: File contenenti solo firme e interfacce senza logica, usati da TS per inferire i tipi di librerie scritte in JS.
+- **Dichiarazioni `.d.ts`**: File contenenti solo firme senza logica, usati da TS per inferire i tipi di librerie o moduli scritti in JS.
