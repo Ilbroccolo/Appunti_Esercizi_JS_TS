@@ -1,92 +1,139 @@
 # Appunti ed Esercizi: JavaScript & TypeScript
 
-Benvenuto in questo repository, pensato come un raccoglitore di appunti, esercizi e prove in itinere riguardanti i concetti di programmazione in **JavaScript** e **TypeScript**. Questo progetto unisce i materiali del corso, inclusa la cartella riassuntiva delle esercitazioni e gli esercizi suddivisi per argomenti.
+Benvenuto in questo repository, pensato come un raccoglitore di appunti, esercizi e prove in itinere riguardanti i concetti di programmazione in **JavaScript** e **TypeScript** per il corso di Laboratorio I. Questo progetto unisce i materiali del corso, inclusa la cartella riassuntiva delle esercitazioni e gli esercizi suddivisi per argomenti.
+
+---
 
 ## 📂 Struttura del Repository
 
-- **Argomenti Specifici**: Cartelle come `Alberi`, `Ricorsione`, `ABR_Grafi` e `array_avanzati_destrutturazione_default_spread` contengono implementazioni e test mirati.
-- **Riepilogo_Esercitazione**: Un raccoglitore unificato con tutti gli script e gli esercizi svolti durante le esercitazioni pratiche (es. gestione liste, code, alberi, ereditarietà).
+- **Argomenti Specifici**: Cartelle come `Alberi`, `Ricorsione`, `ABR_Grafi` e `array_avanzati` contengono implementazioni e test mirati.
+- **Riepilogo_Esercitazione**: Un raccoglitore unificato con tutti gli script e gli esercizi svolti durante le esercitazioni pratiche.
 - **Prove in Itinere ed Esami**: Simulazioni, appelli passati e prove intermedie per ripassare in vista dell'esame.
 
 ---
 
-## 📖 Bignami di Teoria: Metodi e Snippet Utili
+## 📖 Bignami di Teoria: Strutture Dati e Metodi Utili
 
-Questa sezione contiene un riassunto dei costrutti e dei metodi fondamentali da ricordare per gli esercizi.
+Questo riassunto contiene i costrutti, le strutture dati e i metodi fondamentali usati ricorrentemente nel Laboratorio 1 per risolvere gli esercizi su liste, alberi, grafi ed ereditarietà.
 
 ### 🧩 Metodi Utili per gli Array (Array Prototype)
 
-Gli array in JS/TS sono estremamente potenti grazie ai loro metodi integrati di ordine superiore. Ecco una tabella riassuntiva dei principali:
+Oltre a `.map`, `.filter` e `.reduce`, ecco la lista completa dei metodi più usati durante il corso:
 
-| Metodo | Cosa fa? | Esempio Pratico | Ritorna |
-| --- | --- | --- | --- |
-| **`.map()`** | Trasforma ogni elemento di un array applicando una funzione e crea un _nuovo_ array con i risultati. | `arr.map(x => x * 2)` (Raddoppia tutti) | Un nuovo Array |
-| **`.filter()`** | Crea un _nuovo_ array contenente solo gli elementi che superano un determinato test (condizione vera). | `arr.filter(x => x > 10)` (Solo > 10) | Un nuovo Array |
-| **`.reduce()`** | "Riduce" l'array a un singolo valore, accumulando i risultati iterazione dopo iterazione (es. una somma). | `arr.reduce((acc, curr) => acc + curr, 0)` | Un singolo Valore |
-| **`.forEach()`** | Esegue una funzione per ogni elemento dell'array. Usato per "effetti collaterali" (stampare, modificare esterni). | `arr.forEach(x => console.log(x))` | `undefined` |
-| **`.find()`** | Cerca e restituisce il _primo_ elemento che soddisfa una determinata condizione. | `arr.find(x => x.id === 5)` | L'elemento o `undefined` |
-| **`.some()`** | Controlla se _almeno uno_ degli elementi soddisfa la condizione. | `arr.some(x => x < 0)` | Boolean (`true`/`false`) |
-| **`.every()`** | Controlla se _tutti_ gli elementi soddisfano la condizione. | `arr.every(x => x > 0)` | Boolean (`true`/`false`) |
-| **`.includes()`**| Verifica semplicemente se un elemento specifico è presente nell'array. | `arr.includes('Mela')` | Boolean (`true`/`false`) |
+| Metodo | Cosa fa? | Esempio Pratico | Ritorna | Modifica l'originale? |
+| --- | --- | --- | --- | --- |
+| **`.map()`** | Mappa ogni elemento su un nuovo valore. | `arr.map(x => x * 2)` | Nuovo Array | ❌ No |
+| **`.filter()`** | Filtra gli elementi in base a una condizione. | `arr.filter(x => x > 10)` | Nuovo Array | ❌ No |
+| **`.reduce()`** | Accumula i valori in un singolo risultato. | `arr.reduce((acc, x) => acc + x, 0)` | Singolo Valore | ❌ No |
+| **`.forEach()`** | Itera per ogni elemento (effetti collaterali). | `arr.forEach(x => print(x))` | `undefined` | ❌ No |
+| **`.find()`** | Restituisce il *primo* elemento trovato. | `arr.find(x => x.id === 5)` | L'elemento o `undefined` | ❌ No |
+| **`.some()`** / **`.every()`** | Controlla se *almeno uno* / *tutti* soddisfano il test. | `arr.some(x => x < 0)` | Boolean | ❌ No |
+| **`.push()`** / **`.pop()`** | Aggiunge/Rimuove un elemento in coda (uso Pila/Stack). | `arr.push(5); arr.pop()` | Lunghezza / Elem. rimosso | ⚠️ **Sì** |
+| **`.unshift()`** / **`.shift()`** | Aggiunge/Rimuove in testa (uso Coda/Queue). | `arr.shift()` | Lunghezza / Elem. rimosso | ⚠️ **Sì** |
+| **`.splice()`** | Rimuove, sostituisce o aggiunge elementi a un indice preciso. | `arr.splice(indice, 1)` | Array di rimossi | ⚠️ **Sì** |
+| **`.slice()`** | Crea una copia superficiale di una porzione di array. | `arr.slice(1, 4)` | Nuovo Array | ❌ No |
+| **`.sort()`** | Ordina l'array (richiede una funzione di comparazione!). | `arr.sort((a,b) => a - b)` | L'array ordinato | ⚠️ **Sì** |
+| **`.join()`** | Unisce gli elementi in una stringa separati da un carattere. | `arr.join(', ')` | Stringa | ❌ No |
+| **`.flatMap()`** | Applica `map` e poi "appiattisce" l'array di 1 livello. | `arr.flatMap(x => [x, x*2])`| Nuovo Array | ❌ No |
 
-### ⚙️ Generatori e Iteratori
+### 📚 Dizionari (Map) e Insiemi (Set)
+Spesso usati per grafi, memoizzazione o per eliminare duplicati.
+- **`Set`**: `const s = new Set(); s.add(x); s.has(x); s.delete(x);`
+- **`Map`**: `const m = new Map(); m.set(chiave, valore); m.get(chiave); m.has(chiave);`
 
-I **Generatori** sono un tipo speciale di funzione che può essere messa in pausa ed eseguita in più step. Al posto di eseguire tutto il codice e fare un singolo `return`, un generatore usa la parola chiave `yield` per "sputare fuori" (restituire) valori in sequenza ogni volta che viene chiamato.
+---
 
-#### Sintassi di un Generatore
-Si riconosce dall'asterisco `*` dopo la parola `function`:
+## 🌳 Alberi Binari, Alberi K-Ari e Visite (Traversals)
+
+Gli alberi sono fondamentali in Lab 1. Ecco i concetti teorici e implementativi riassunti:
+
+### 1. Nodi dell'Albero
+**Albero Binario**: Ogni nodo ha al massimo due figli (sinistro e destro).
+```typescript
+class BNode<T> {
+    value: T;
+    left: BNode<T> | null;
+    right: BNode<T> | null;
+    constructor(value: T, left = null, right = null) {
+        this.value = value;
+        this.left = left;
+        this.right = right;
+    }
+}
+```
+
+**Albero K-Ario**: Ogni nodo può avere un numero arbitrario di figli, solitamente salvati in un array.
+```typescript
+class KNode<T> {
+    value: T;
+    children: KNode<T>[];
+    constructor(value: T, children: KNode<T>[] = []) {
+        this.value = value;
+        this.children = children;
+    }
+}
+```
+
+### 2. Le Visite (Traversals)
+Le visite servono per attraversare i nodi dell'albero. Possono essere implementate ricorsivamente o tramite iteratori/generatori.
+
+#### A. Visita in Profondità (DFS - Depth First Search)
+La visita DFS si spinge fino alle foglie prima di tornare indietro. Su un albero binario si divide in:
+- **Pre-ordine (Anticipata)**: Visito il nodo -> Scendo a Sinistra -> Scendo a Destra. Utile per copiare o serializzare un albero.
+- **In-ordine (Simmetrica)**: Scendo a Sinistra -> Visito il nodo -> Scendo a Destra. Negli ABR (Alberi Binari di Ricerca), l'in-ordine restituisce i valori ordinati!
+- **Post-ordine (Posticipata)**: Scendo a Sinistra -> Scendo a Destra -> Visito il nodo. Utile per calcolare altezze, cancellare l'albero o valutare espressioni matematiche ad albero.
+
+#### B. Visita in Ampiezza (BFS - Livelli)
+Attraversa l'albero strato per strato (livello per livello). Non è ricorsiva per natura, utilizza una **Coda (Queue)** di appoggio:
 ```javascript
-function* contaFinoA(max) {
-  let i = 1;
-  while (i <= max) {
-    yield i; // Pausa l'esecuzione e restituisce 'i'
-    i++;
-  }
+function visitaAmpiezza(radice) {
+    if (!radice) return;
+    const coda = [radice]; // Uso l'array come Coda (push e shift)
+    while (coda.length > 0) {
+        const corrente = coda.shift(); // Estrae il primo elemento
+        console.log(corrente.value); // Visita
+        
+        if (corrente.left) coda.push(corrente.left);
+        if (corrente.right) coda.push(corrente.right);
+    }
+}
+```
+
+### 3. I Generatori (`function*`) per le Visite
+I generatori permettono di creare iteratori eleganti per le visite. Invece di salvare l'intera visita in un array o stamparla, il generatore "spara" un nodo alla volta usando `yield`. `yield*` viene usato per delegare la chiamata ricorsiva a un altro iteratore/generatore.
+
+**Esempio: Generatore per la visita Pre-Ordine di un Albero K-Ario**
+```javascript
+function* preOrderKNode(node) {
+    if (!node) return;
+    yield node.value; // Visita il nodo corrente
+    for (let child of node.children) {
+        yield* preOrderKNode(child); // yield* lancia il generatore ricorsivamente sui figli
+    }
 }
 
-// Come usarlo:
-const generatore = contaFinoA(3); // Crea l'oggetto iteratore
-console.log(generatore.next().value); // 1
-console.log(generatore.next().value); // 2
-console.log(generatore.next().value); // 3
-console.log(generatore.next().done);  // true (ha finito)
-```
-
-**Perché sono utili?**
-- Permettono di generare sequenze infinite (es. numeri di Fibonacci o ID univoci) senza occupare memoria per un array gigantesco.
-- Ideali per attraversare strutture dati complesse (come gli **Alberi**) un nodo alla volta su richiesta.
-
-### 📦 Destrutturazione e Spread Operator (`...`)
-
-Questi operatori semplificano la copia, l'unione e l'estrazione di dati da oggetti e array.
-
-**Destrutturazione (Estrazione dati)**
-```javascript
-const utente = { nome: "Mario", eta: 25 };
-const { nome, eta } = utente; // Estrae le proprietà come variabili isolate
-
-const array = [10, 20, 30];
-const [primo, secondo] = array; // primo = 10, secondo = 20
-```
-
-**Spread Operator (Spalmatura/Unione)**
-```javascript
-const arr1 = [1, 2, 3];
-const arr2 = [4, 5];
-const uniti = [...arr1, ...arr2]; // [1, 2, 3, 4, 5] (Copia e unisce i valori)
-
-const utenteCopia = { ...utente, admin: true }; 
-// { nome: "Mario", eta: 25, admin: true }
+// Utilizzo:
+for (let val of preOrderKNode(radice)) {
+    console.log(val); // Processa un nodo alla volta
+}
 ```
 
 ---
 
-## 🔄 L'Interazione tra JavaScript e TypeScript
+## ⚙️ Altri Costrutti JS/TS Importanti
 
-Uno degli aspetti chiave affrontati in questi appunti è la convivenza tra JavaScript (JS) e TypeScript (TS). TypeScript è un *superset* sintattico di JS che aggiunge la tipizzazione statica, ma viene transpilato in semplice JS prima dell'esecuzione.
+### Destrutturazione ed Estrazione
+Estremamente usati quando si passano oggetti complessi o si usano moduli.
+```javascript
+// Destrutturazione Array
+const [testa, ...coda] = [1, 2, 3, 4]; // testa = 1, coda = [2, 3, 4]
 
-### Concetti Chiave:
-1. **TS è un Superset**: Qualsiasi file JS valido è anche TS valido.
-2. **JSDoc in JavaScript**: Usando commenti `@param` e `@returns` abbinati a `// @ts-check` all'inizio del file, puoi avere la potenza del controllo tipi di TypeScript anche nei file in puro `.js`.
-3. **File `.d.ts` (Dichiarazioni)**: Fungono da ponte. Contengono solo le firme delle funzioni per permettere a TS di capire e validare librerie esterne scritte in JS.
-4. **`tsconfig.json`**: Usando `allowJs: true` è possibile compilare file JS all'interno di un progetto TS, facilitando la migrazione progressiva.
+// Destrutturazione Oggetti
+const nodo = { val: 5, left: null, right: null };
+const { val, left } = nodo; // val = 5
+```
+
+### L'Interazione JavaScript 🤝 TypeScript
+- **TS è un Superset**: Qualsiasi file JS valido è anche TS valido (se non si forzano controlli restrittivi).
+- **JSDoc in JavaScript**: Tramite commenti `/** @param {number} x */` e aggiungendo `// @ts-check` a inizio file, si ottiene la validazione statica dei tipi anche su semplici file `.js`!
+- **Dichiarazioni `.d.ts`**: File contenenti solo firme e interfacce senza logica, usati da TS per inferire i tipi di librerie scritte in JS.
